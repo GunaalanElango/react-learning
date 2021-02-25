@@ -10,6 +10,7 @@ import classes from "./Person.css";
 // `;
 
 const Person = (props) => {
+  console.log("[Person.js] Rendering...");
   return (
     <div className={classes.Person}>
       <p onClick={props.click}>
@@ -21,4 +22,3 @@ const Person = (props) => {
 };
 
 export default Person;
-
