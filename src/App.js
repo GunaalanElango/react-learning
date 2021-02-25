@@ -1,18 +1,20 @@
-import "./App.css";
-import Person from "./Person/Person";
+import classes from "./App.css";
+import Persons from "./components/Persons/Persons";
+import Cockpit from "./components/Cockpit/Cockpit";
 import React, { Component } from "react";
-import styled from "styled-components";
 
-const Button = styled.button`
-  border: 1px solid ${(props) => (props.primary ? "green" : "red")};
-  background: ${(props) => (props.primary ? "green" : "red")};
-  color: white;
-  padding: 10px;
-  font-size: 1rem;
-  font-weight: bold;
-  cursor: pointer;
-  border-radius: 5px;
-`;
+// import styled from "styled-components";
+
+// const Button = styled.button`
+//   border: 1px solid ${(props) => (props.primary ? "green" : "red")};
+//   background: ${(props) => (props.primary ? "green" : "red")};
+//   color: white;
+//   padding: 10px;
+//   font-size: 1rem;
+//   font-weight: bold;
+//   cursor: pointer;
+//   border-radius: 5px;
+// `;
 
 class App extends Component {
   state = {
@@ -22,13 +24,11 @@ class App extends Component {
       { name: "Chitra", age: 10 },
     ],
     showPersons: false,
-    primary: true,
   };
 
   showPersonHandler = () => {
     const showPersons = this.state.showPersons ? false : true;
-    const primary = this.state.primary ? false : true;
-    this.setState({ showPersons: showPersons, primary: primary });
+    this.setState({ showPersons: showPersons });
   };
 
   deletePersonHandler = (index) => {
@@ -49,28 +49,20 @@ class App extends Component {
 
     if (this.state.showPersons) {
       persons = (
-        <div>
-          {this.state.persons.map((person, index) => {
-            return (
-              <Person
-                name={person.name}
-                age={person.age}
-                key={index}
-                changed={(event) => this.changeNameHandler(event, index)}
-                click={() => this.deletePersonHandler(index)}
-              />
-            );
-          })}
-        </div>
+        <Persons
+          persons={this.state.persons}
+          changed={this.changeNameHandler}
+          click={this.deletePersonHandler}
+        />
       );
     }
 
     return (
-      <div className="App">
-        <h1>This is my first React App</h1>
-        <Button primary={this.state.primary} onClick={this.showPersonHandler}>
-          Show Persons
-        </Button>
+      <div className={classes.App}>
+        <Cockpit
+          click={this.showPersonHandler}
+          showPersons={this.state.showPersons}
+        />
         {persons}
       </div>
     );
