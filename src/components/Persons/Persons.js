@@ -23,6 +23,19 @@ class Persons extends Component {
     return true;
   }
 
+  getSnapshotBeforeUpdate(prevProps, prevState) {
+    console.log("[Persons.js] getSnapshotBeforeUpdate");
+    return null;
+  }
+
+  componentDidUpdate() {
+    console.log("[Persons.js] componentDidUpdate");
+  }
+
+  componentWillUnmount() {
+    console.log("[Persons.js] componentWillUnmount");
+  }
+
   render() {
     console.log("[Persons.js] Rendering...");
     return this.props.persons.map((person, index) => (
