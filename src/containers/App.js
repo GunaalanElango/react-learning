@@ -2,6 +2,8 @@ import classes from "./App.css";
 import Persons from "../components/Persons/Persons";
 import Cockpit from "../components/Cockpit/Cockpit";
 import React, { Component } from "react";
+import AuthContext from "../context/AuthContext";
+// import Aux from '../hoc/Auxiliary';
 
 // import styled from "styled-components";
 
@@ -18,7 +20,7 @@ import React, { Component } from "react";
 
 class App extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     console.log("[App.js] Constructor");
   }
 
@@ -29,6 +31,7 @@ class App extends Component {
       { name: "Chitra", age: 10 },
     ],
     showPersons: false,
+    authenticated: false,
   };
 
   static getDerivedStateFromProps(props, state) {
@@ -58,6 +61,10 @@ class App extends Component {
     this.setState({ persons: persons });
   };
 
+  loginHandler = () => {
+    this.setState({ authenticated: true });
+  };
+
   render() {
     console.log("[App.js] Rendering...");
     let persons = null;
@@ -74,11 +81,18 @@ class App extends Component {
 
     return (
       <div className={classes.App}>
-        <Cockpit
-          click={this.showPersonHandler}
-          showPersons={this.state.showPersons}
-        />
-        {persons}
+        <AuthContext.Provider
+          value={{
+            authenticated: this.state.authenticated,
+            login: this.loginHandler,
+          }}
+        >
+          <Cockpit
+            click={this.showPersonHandler}
+            showPersons={this.state.showPersons}
+          />
+          {persons}
+        </AuthContext.Provider>
       </div>
     );
   }
